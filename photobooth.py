@@ -36,18 +36,25 @@ delete_after_upload = True
 gphoto_config = {
     '/main/imgsettings/imagesize': 3, # small
     '/main/imgsettings/imagequality': 0, # normal
+    '/main/capturesettings/zoom': 70, # zoom factor
 }
 
 class PhotoBooth(object):
+
+    def initialize(self):
+        """ Detect the camera and set the various settings """
+        cfg = ['--set-config=%s=%s' % (k, v) for k, v in gphoto_config.items()]
+        subprocess.call('gphoto2 --auto-detect ' +
+                        ' '.join(cfg), shell=True)
 
     def capture_photo(self):
         """ Capture a photo and download it from the camera """
         filename = join(out, '%s.jpg' % str(uuid4()))
         cfg = ['--set-config=%s=%s' % (k, v) for k, v in gphoto_config.items()]
-        subprocess.call('gphoto2 --auto-detect ' +
+        subprocess.call('gphoto2 ' +
                         '--capture-image-and-download ' +
-                        '--filename="%s" ' % filename +
-                        ' '.join(cfg), shell=True)
+                        '--filename="%s" ' % filename,
+                        shell=True)
         return filename
 
     def process_image(self, filename):
@@ -129,6 +136,7 @@ class PhotoBooth(object):
 if __name__ == "__main__":
     photobooth = PhotoBooth()
     try:
+        photobooth.initialize()
         while True:
             raw_input("Press enter to capture photo.")
             filename = photobooth.capture_photo()

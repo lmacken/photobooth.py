@@ -87,7 +87,7 @@ class PhotoBooth(object):
 
     def upload(self, image):
         """ Upload this image to a remote server """
-        os.system('scp "%s" %s' % (image, ssh_image_repo))
+        subprocess.call('scp "%s" %s' % (image, ssh_image_repo), shell=True)
         if delete_after_upload:
             os.unlink(image)
         return http_image_repo + basename(image)
@@ -95,7 +95,8 @@ class PhotoBooth(object):
     def qrencode(self, url):
         """ Generate a QRCode for a given URL """
         qrcode = join(out, 'qrcode.png')
-        os.system('qrencode -s %d -o "%s" %s' % (qrcode_size, qrcode, url))
+        subprocess.call('qrencode -s %d -o "%s" %s' % (
+            qrcode_size, qrcode, url), shell=True)
         return qrcode
 
     def tinyurl(self, url):

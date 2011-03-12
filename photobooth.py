@@ -1,13 +1,12 @@
 #!/usr/bin/python
-# sxsw.py - version 0.2
-# Requires: python-imaging, qrencode, gphoto2
+# photobooth.py - version 0.3
+# Requires: python-imaging, qrencode, gphoto2, surl
 # Author: Luke Macken <lmacken@redhat.com>
 # License: GPLv3
 
 import os
+import surl
 import Image
-import urllib
-import simplejson
 import subprocess
 
 from uuid import uuid4
@@ -39,6 +38,9 @@ gphoto_config = {
     '/main/capturesettings/zoom': 70, # zoom factor
 }
 
+# The URL shortener to use
+shortener = 'tinyurl.com'
+
 class PhotoBooth(object):
 
     def initialize(self):
@@ -65,8 +67,8 @@ class PhotoBooth(object):
         url = self.upload(image)
         print "Generating QRCode..."
         qrcode = self.qrencode(url)
-        print "Generating TinyURL..."
-        tiny = self.tinyurl(url)
+        print "Shortening URL..."
+        tiny = self.shorten(url)
         print "Generating HTML..."
         html = self.html_output(url, qrcode, tiny)
         subprocess.call('firefox "%s"' % html, shell=True)
@@ -99,15 +101,9 @@ class PhotoBooth(object):
             qrcode_size, qrcode, url), shell=True)
         return qrcode
 
-    def tinyurl(self, url):
-        """ Generate a tinyurl for a given URL """
-        data = urllib.urlopen("http://json-tinyurl.appspot.com/?url=%s" % url).read()
-        json = simplejson.loads(data)
-        if not json['ok']:
-            print 'ERROR: There was a problem generating a tinyurl'
-            print json
-            return url
-        return json['tinyurl']
+    def shorten(self, url):
+        """ Generate a shortened URL """
+        return surl.services.supportedServices()[shortener].get({}, url)
 
     def html_output(self, image, qrcode, tinyurl):
         """ Output HTML with the image, qrcode, and tinyurl """

@@ -1,10 +1,10 @@
-***photobooth.py***
+**photobooth.py**
 
 An automated photobooth script.
 
 .. image:: http://lewk.org/img/photobooth1.jpg
 
-**Features**
+*Features*
 
 -  Uses gphoto2 to automatically detect your camera
 -  When Enter is pressed, it snaps a photo and downloads it locally
@@ -16,6 +16,6 @@ An automated photobooth script.
 -  The page is then displayed in the web browser
 
 
-**Announcement:** http://lewk.org/blog/photobooth.py
+*Announcement:* http://lewk.org/blog/photobooth.py
 
 .. image:: http://lewk.org/img/photobooth0.jpg

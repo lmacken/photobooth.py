@@ -71,7 +71,7 @@ class PhotoBooth(object):
         tiny = self.shorten(url)
         print "Generating HTML..."
         html = self.html_output(url, qrcode, tiny)
-        subprocess.call('firefox "%s"' % html, shell=True)
+        subprocess.call('xdg-open "%s"' % html, shell=True)
         print "Done!"
 
     def watermark(self, image):

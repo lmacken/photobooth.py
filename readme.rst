@@ -20,6 +20,13 @@ An automated photobooth script.
 
 .. image:: http://lewk.org/img/photobooth0.jpg
 
+*Requirements:*
+
+- `python-imaging <http://www.pythonware.com/products/pil>`_
+- `qrencode <http://megaui.net/fukuchi/works/qrencode/index.en.html>`_
+- `gphoto2 <http://www.gphoto.org/>`_
+- `surl <https://launchpad.net/surl>`_
+
 *License*
 
 .. image:: https://www.gnu.org/graphics/gplv3-127x51.png

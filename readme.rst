@@ -19,3 +19,8 @@ An automated photobooth script.
 *Announcement:* http://lewk.org/blog/photobooth.py
 
 .. image:: http://lewk.org/img/photobooth0.jpg
+
+*License*
+
+.. image:: https://www.gnu.org/graphics/gplv3-127x51.png
+   :target: https://www.gnu.org/licenses/gpl.txt
